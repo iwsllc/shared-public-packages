@@ -1,6 +1,6 @@
 {
   "name": "@iwsio/eslint-config",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.1",
   "description": "IWSLLC Shared ESLint Configuration",
   "main": "./index.mjs",
   "type": "module",
