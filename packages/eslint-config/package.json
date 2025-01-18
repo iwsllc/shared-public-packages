@@ -1,0 +1,36 @@
+{
+  "name": "@iwsio/eslint-config",
+  "version": "1.0.8",
+  "description": "IWSLLC Shared ESLint Configuration",
+  "main": "./index.mjs",
+  "type": "module",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": [
+    "*.mjs"
+  ],
+  "repository": "github:iwsllc/shared-public-packages",
+  "author": "Nathan Bridgewater <info@iws.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iwsllc/shared-public-packages/issues"
+  },
+  "homepage": "https://github.com/iwsllc/shared-public-packages/packages/eslint-config#readme",
+  "dependencies": {
+    "@eslint/compat": "^1.2.4",
+    "@eslint/js": "^9.9.1",
+    "@stylistic/eslint-plugin": "^2.11.0",
+    "eslint": "^9.16.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-n": "^17.14.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-tailwindcss": "^3.17.5",
+    "globals": "^15.13.0",
+    "typescript-eslint": "^8.17.0"
+  }
+}

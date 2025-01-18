@@ -1,0 +1,21 @@
+{
+  "name": "@iwsio/tsconfig",
+  "version": "1.0.1",
+  "description": "IWSLLC Shared TypeScript Configuration",
+  "main": "./tsconfig-base.json",
+  "exports": {
+    ".": "./tsconfig-base.json",
+    "./browser": "./tsconfig-browser.json",
+    "./react": "./tsconfig-react.json"
+  },
+  "files": [
+    "*.json"
+  ],
+  "repository": "github:iwsllc/shared-public-packages",
+  "author": "Nathan Bridgewater <info@iws.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iwsllc/shared-public-packages/issues"
+  },
+  "homepage": "https://github.com/iwsllc/shared-public-packages/packages/tsconfig/readme"
+}

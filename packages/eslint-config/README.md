@@ -1,0 +1,1 @@
+# @iwsio/eslint-config

@@ -1,0 +1,35 @@
+name: "@iwsio/eslint-config: PUSH to main"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'packages/eslint-config/**'
+
+jobs:
+  version:
+    if: ${{ !contains(github.event.head_commit.message, '#skip') }}
+    uses: iwsllc/workflows/.github/workflows/version.yaml@v2
+    with:
+      ref: main
+      cache: npm
+      node-version-file: '.nvmrc'
+      scope: '@iwsio'
+      version-command: npm version patch -w packages/eslint-config
+      version-workspace: packages/eslint-config
+      tag-includes-name: true
+  publish:
+    needs: version
+    if: ${{ !contains(github.event.head_commit.message, '#skip') }}
+    uses: iwsllc/workflows/.github/workflows/publish.yaml@v2
+    with:
+      ref: main
+      cache: npm
+      node-version-file: '.nvmrc'
+      scope: '@iwsio'
+      install-command: 
+      build-command: 
+      publish-command: npm publish -w packages/eslint-config --access public
+    secrets:
+      # This token is used for reading npm packages; use when private packages are used
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
