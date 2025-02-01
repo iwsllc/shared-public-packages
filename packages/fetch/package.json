@@ -1,0 +1,47 @@
+{
+  "name": "@iwsio/fetch",
+  "version": "2.0.21",
+  "license": "BSD-3-Clause",
+  "description": "A simple set of functions to enable typed fetching using built-in fetch.",
+  "repository": "github:iwsllc/iwsio-packages",
+  "scripts": {
+    "test": "vitest --run --passWithNoTests",
+    "server": "node ./src/__mocks__/server.cjs",
+    "build": "tsc --build tsconfig.build.json",
+    "clean": "npm-run-all -s clean:ts clean:fs",
+    "clean:fs": "rimraf dist",
+    "clean:ts": "tsc --build --clean tsconfig.build.json",
+    "prewatch": "tsc --build --clean tsconfig.build.json",
+    "watch": "tsc --build watch --preserveWatchOutput tsconfig.build.json",
+    "lint": "eslint ."
+  },
+  "author": "Nathan Bridgewater",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22.10.1",
+    "@types/react": "^18.3.14",
+    "@types/react-dom": "^18.3.2",
+    "express": "^4.21.1",
+    "jsdom": "^25.0.1",
+    "morgan": "^1.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,23 @@
+name: "@iwsio/fetch: PR to main"
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'packages/fetch/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  testing:
+    if: ${{github.event.pull_request.draft == false && !contains(github.event.head_commit.message, '#skip') }}
+    uses: iwsllc/workflows/.github/workflows/test.yaml@v2
+    with:
+      registry-url: 'https://registry.npmjs.org'
+      scope: '@iwsio'
+      node-version-file: '.nvmrc'
+      cache: npm
+      install-command: npm ci
+      test-command: npm run test -w packages/fetch
