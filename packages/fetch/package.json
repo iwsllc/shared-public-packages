@@ -3,7 +3,7 @@
   "version": "2.0.22",
   "license": "BSD-3-Clause",
   "description": "A simple set of functions to enable typed fetching using built-in fetch.",
-  "repository": "github:iwsllc/iwsio-packages",
+  "repository": "github:iwsllc/shared-public-packages",
   "scripts": {
     "test": "vitest --run --passWithNoTests",
     "server": "node ./src/__mocks__/server.cjs",

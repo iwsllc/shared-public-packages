@@ -1,6 +1,6 @@
 # @iwsio/fetch
 
-[![@iwsio/fetch: Push to main](https://github.com/iwsllc/iwsio-packages/actions/workflows/fetch-push-main.yaml/badge.svg)](https://github.com/iwsllc/iwsio-packages/actions/workflows/fetch-push-main.yaml)
+[![@iwsio/fetch: Push to main](https://github.com/iwsllc/shared-public-packages/actions/workflows/fetch-push-main.yaml/badge.svg)](https://github.com/iwsllc/shared-public-packages/actions/workflows/fetch-push-main.yaml)
 
 This package is meant to simplify fetching typed values from an API using the [built-in `fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
