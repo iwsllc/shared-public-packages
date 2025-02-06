@@ -20,11 +20,12 @@ export { fetchTyped, resolveResponse }
  * export const { getMany, getOne, post, patch } = utils
  * const users: User[] = await getMany<User>('/users')
  * ```
- * @param baseUrl Base URL (excluding trailing slash) for all api calls with these functions
+ * @param baseUrl Base URL (excluding trailing slash) for all api calls with these functions;
+ * Defaults to blank string. This means than fetches will use the endpoint as the absolute URL. `/api/test` will fetch verbatim.
  * @param defaultOptions Default request options. See MDN RequestInit/fetch
  * @returns
  */
-export function setupFetch<E extends ErrorBody>(baseUrl: string, defaultOptions: Partial<RequestInit> = {}) {
+export function setupFetch<E extends ErrorBody>(baseUrl: string = '', defaultOptions: Partial<RequestInit> = {}) {
 	async function fetchWithDefaultOptions<T, E>(endpoint: string, options: FetchArgs = {}) {
 		return await fetchTyped<T, E>(`${baseUrl}${endpoint}`, options, defaultOptions)
 	}

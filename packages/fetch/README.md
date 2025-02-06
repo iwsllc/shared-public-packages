@@ -28,28 +28,27 @@ interface UserListResponse {
 	total: number
 }
 
-const utils = setupFetch<DefaultErrorBody>('http://localhost:3000')
+const utils = setupFetch<DefaultErrorBody>('http://localhost:3000') // with baseUrl
+const utils = setupFetch<DefaultErrorBody>() // No baseUrl
+
 export const { getMany, getOne, post, patch } = utils
 
-
-// Elsewhere...
-
-// append id
+// Consuming
 try {
 	const user = await getOne<User>('/users', id)
 
-// OR by hand
-const user2 = await get<User>('/users/123')
+	// OR manually
+	const user2 = await get<User>('/users/123')
 
-// Simple get many; assume response is simple array of type
-const users = await getMany<User>('/users')
+	// Simple get many; assume response is simple array of type
+	const users = await getMany<User>('/users')
 
-// More complex get many... response might be paged, with meta info
-const listResponse = await get<UserListResponse>('/users?page=2&size=20')
+	// More complex get many... response might be paged, with meta info
+	const listResponse = await get<UserListResponse>('/users?page=2&size=20')
+
 } catch(err: unknown) {
 	if (isFetchError(err)) {
 		// ...; work with err.body; and `isErrorBody` type assertion
 	}
 }
-
 ```
