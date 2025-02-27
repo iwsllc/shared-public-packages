@@ -1,6 +1,6 @@
 {
   "name": "@iwsio/fetch",
-  "version": "2.0.26",
+  "version": "2.0.27",
   "license": "BSD-3-Clause",
   "description": "A simple set of functions to enable typed fetching using built-in fetch.",
   "repository": "github:iwsllc/shared-public-packages",
