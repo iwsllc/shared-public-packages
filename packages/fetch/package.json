@@ -31,17 +31,21 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^22.13.1",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/node": "^22.13.5",
     "express": "^4.21.2",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.0.0",
     "morgan": "^1.10.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "rimraf": "^6.0.1",
     "tslib": "^2.8.1",
     "typescript": "^5.7.3",
-    "vitest": "^2.1.9"
+    "vitest": "^3.0.7",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "peerDependencies": {
+    "react": ">= 18 < 20",
+    "react-dom": ">= 18 < 20"
   }
 }
