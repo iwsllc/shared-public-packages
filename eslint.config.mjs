@@ -5,4 +5,4 @@ const monoRepoPackages = [
 
 const monoRepoNodeProjects = []
 
-export default configure({ monoRepoPackages, monoRepoNodeProjects, debug: true })
+export default configure({ monoRepoPackages, monoRepoNodeProjects })
