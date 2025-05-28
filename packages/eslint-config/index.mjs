@@ -28,7 +28,8 @@ export const configure = (
 		 * Additional configs to append to the end of the configuration.
 		 * @type {import('eslint').Linter.Config[]}
 		 */
-		appendConfigs = []
+		appendConfigs = [],
+		debug = false
 	}) => {
 	const lintConfigs = [
 		{
@@ -132,6 +133,9 @@ export const configure = (
 			}
 		}
 	]
+	if (debug) {
+		console.dir(lintConfigs.filter(c => !!c), { depth: 2, colors: true })
+	}
 	return [
 		...config(lintConfigs.filter(c => !!c))
 	]
