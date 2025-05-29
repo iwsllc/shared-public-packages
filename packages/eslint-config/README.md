@@ -28,5 +28,5 @@ Override any one of these for your own configuration. Note that `debug` will pri
 
 ## Default ESLint configuration
 
-See [index.mjs](./index.mjs) for the full ESLint configuration. It's using [typescript-eslint](https://typescript-eslint.io/getting-started) and [stylistic customize factory](https://eslint.style/guide/config-presets). 
+See [index.mjs](https://github.com/iwsllc/shared-public-packages/blob/main/packages/eslint-config/index.mjs) for the full ESLint configuration. It's using [typescript-eslint](https://typescript-eslint.io/getting-started) and [stylistic customize factory](https://eslint.style/guide/config-presets). 
 

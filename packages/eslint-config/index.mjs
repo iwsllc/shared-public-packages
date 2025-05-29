@@ -14,8 +14,7 @@ import sort from './eslint-plugin-simple-import-sort.mjs'
 
 /**
  * Generate ESLint configuration for a project. This is an opinionated Typescript & stylistic configuration.
- *
- * @param {import('./index.d').CustomizeOptions} options - The options to customize the ESLint configuration.
+ * @type {import('./index').CustomizeFn}
  */
 export const configure = (
 	{

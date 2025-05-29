@@ -1,3 +1,5 @@
+import type { ConfigArray } from '@eslint/config-array'
+export { ConfigArray }
 export interface CustomizeOptions {
 	/**
 	 * List of package names that can be imported among workspaces in the monorepo.
@@ -12,7 +14,7 @@ export interface CustomizeOptions {
 	 *
 	 * See: https://github.com/eslint-stylistic/eslint-stylistic/blob/main/packages/eslint-plugin/dts/options.d.ts
 	 */
-	stylisticInit?: import('@stylistic/eslint-plugin/dts/options').StylisticCustomizeOptions
+	stylisticInit?: import('@stylistic/eslint-plugin').StylisticCustomizeOptions
 
 	/**
 	 * Additional global ignores
@@ -21,7 +23,7 @@ export interface CustomizeOptions {
 	/**
 	 * Additional ESLint configs to append to the final config. Use this for custom rules at specific paths.
 	 */
-	appendConfigs?: import('eslint').Linter.Config[]
+	appendConfigs?: ConfigArray
 	/**
 	 * Prints active configuration to the console when running lint.
 	 *
@@ -29,3 +31,5 @@ export interface CustomizeOptions {
 	 */
 	debug?: boolean
 }
+
+export type CustomizeFn = (options?: CustomizeOptions) => ConfigArray
