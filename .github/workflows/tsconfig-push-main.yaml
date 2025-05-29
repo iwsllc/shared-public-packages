@@ -27,7 +27,6 @@ jobs:
       cache: npm
       node-version-file: '.nvmrc'
       scope: '@iwsio'
-      node-version: '22'
       registry-url: 'https://registry.npmjs.org'
       install-command: 
       build-command: 
