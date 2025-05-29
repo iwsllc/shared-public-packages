@@ -8,7 +8,8 @@
     ".": "./index.mjs"
   },
   "files": [
-    "*.mjs"
+    "*.mjs",
+    "*.d.ts"
   ],
   "repository": "github:iwsllc/shared-public-packages",
   "author": "Nathan Bridgewater <info@iws.io>",
