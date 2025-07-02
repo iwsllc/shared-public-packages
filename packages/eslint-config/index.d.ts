@@ -2,6 +2,11 @@ import type { ConfigArray } from '@eslint/config-array'
 export { ConfigArray }
 export interface CustomizeOptions {
 	/**
+	 * If true, enables React specific rules and plugins.
+	 * This is useful for non-React projects or when using a different framework.
+	 */
+	includeReact?: boolean
+	/**
 	 * List of package names that can be imported among workspaces in the monorepo.
 	 */
 	monoRepoPackages?: string[]

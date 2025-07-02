@@ -18,6 +18,7 @@ import sort from './eslint-plugin-simple-import-sort.mjs'
  */
 export const configure = (
 	{
+		includeReact = true,
 		monoRepoPackages = [],
 		monoRepoNodeProjects = [],
 		stylisticInit = {
@@ -43,9 +44,14 @@ export const configure = (
 		// all projects:
 		eslint.configs.recommended,
 		...configs.recommended,
-		...jsxA11y,
-		eslintPluginReactHooks,
-		reactRefreshConfig,
+
+		// JSX specific rules
+		...(includeReact
+			? [...jsxA11y,
+					eslintPluginReactHooks,
+					reactRefreshConfig
+				]
+			: []),
 
 		stylistic.configs.customize(stylisticInit),
 
@@ -53,12 +59,10 @@ export const configure = (
 
 		...tailwind.configs['flat/recommended'],
 
-		...appendConfigs,
-
 		{
 			plugins: {
 				promise: promisePlugin,
-				react: reactPlugin
+				...(includeReact ? { react: reactPlugin } : {})
 			},
 			languageOptions: {
 				ecmaVersion: 2022,
@@ -70,8 +74,13 @@ export const configure = (
 			},
 			rules: {
 				...promisePlugin.configs.recommended.rules,
-				...reactPlugin.configs.recommended.rules,
-				...reactPlugin.configs['jsx-runtime'].rules,
+
+				...(includeReact
+					? {
+							...reactPlugin.configs.recommended.rules,
+							...reactPlugin.configs['jsx-runtime'].rules
+						}
+					: {}),
 
 				// custom rules here
 				'promise/always-return': ['error', { ignoreLastCallback: true }],
@@ -95,9 +104,13 @@ export const configure = (
 			},
 
 			settings: {
-				react: {
-					version: 'detect' // You can add this if you get a warning about the React version when you lint
-				}
+				...(includeReact
+					? {
+							react: {
+								version: 'detect' // You can add this if you get a warning about the React version when you lint
+							}
+						}
+					: {})
 			}
 		},
 		(monoRepoNodeProjects.length > 0 && ({
@@ -136,7 +149,8 @@ export const configure = (
 				'n/no-unpublished-import': 'off',
 				'@stylistic/max-statements-per-line': 'off'
 			}
-		}
+		},
+		...appendConfigs
 	]
 	if (debug) {
 		console.dir(lintConfigs.filter(c => !!c), { depth: 2, colors: true })
