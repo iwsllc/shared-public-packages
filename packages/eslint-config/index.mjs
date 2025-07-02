@@ -3,7 +3,6 @@ import stylistic from '@stylistic/eslint-plugin'
 import nodePlugin from 'eslint-plugin-n'
 import promisePlugin from 'eslint-plugin-promise'
 import reactPlugin from 'eslint-plugin-react'
-import tailwind from 'eslint-plugin-tailwindcss'
 import globals from 'globals'
 import { config, configs } from 'typescript-eslint'
 
@@ -19,7 +18,6 @@ import sort from './eslint-plugin-simple-import-sort.mjs'
 export const configure = (
 	{
 		includeReact = true,
-		includeTailwind = true,
 		monoRepoPackages = [],
 		monoRepoNodeProjects = [],
 		stylisticInit = {
@@ -58,8 +56,6 @@ export const configure = (
 
 		sort,
 
-		...(includeTailwind ? tailwind.configs['flat/recommended'] : []),
-
 		{
 			plugins: {
 				promise: promisePlugin,
@@ -85,8 +81,6 @@ export const configure = (
 
 				// custom rules here
 				'promise/always-return': ['error', { ignoreLastCallback: true }],
-
-				...(includeTailwind && { 'tailwindcss/no-custom-classname': 'off' }),
 
 				'@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
 				'@typescript-eslint/no-explicit-any': 'off',
