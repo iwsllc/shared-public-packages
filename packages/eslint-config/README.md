@@ -8,6 +8,8 @@ See: [`./index.d.ts`](./index.d.ts) for option documentation.
 
 ```js
 {
+		includeReact: true,
+		includeTailwind: true, // NOTE: eslint-plugin-tailwindcss uses v3 for sorting of classnames. Either 3 or 4 will work; both have `resolveConfig`
 		monoRepoPackages = [],
 		monoRepoNodeProjects = [],
 		stylisticInit = {

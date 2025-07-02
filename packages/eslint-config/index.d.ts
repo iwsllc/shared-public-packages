@@ -4,8 +4,15 @@ export interface CustomizeOptions {
 	/**
 	 * If true, enables React specific rules and plugins.
 	 * This is useful for non-React projects or when using a different framework.
+	 * Default is true.
 	 */
 	includeReact?: boolean
+	/**
+	 * If true, enables Tailwind CSS specific rules and plugins.
+	 * This is useful for projects that use Tailwind CSS.
+	 * Default is true.
+	 */
+	includeTailwind?: boolean
 	/**
 	 * List of package names that can be imported among workspaces in the monorepo.
 	 */

@@ -19,6 +19,7 @@ import sort from './eslint-plugin-simple-import-sort.mjs'
 export const configure = (
 	{
 		includeReact = true,
+		includeTailwind = true,
 		monoRepoPackages = [],
 		monoRepoNodeProjects = [],
 		stylisticInit = {
@@ -57,7 +58,7 @@ export const configure = (
 
 		sort,
 
-		...tailwind.configs['flat/recommended'],
+		...(includeTailwind ? tailwind.configs['flat/recommended'] : []),
 
 		{
 			plugins: {
@@ -85,7 +86,7 @@ export const configure = (
 				// custom rules here
 				'promise/always-return': ['error', { ignoreLastCallback: true }],
 
-				'tailwindcss/no-custom-classname': 'off',
+				...(includeTailwind && { 'tailwindcss/no-custom-classname': 'off' }),
 
 				'@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
 				'@typescript-eslint/no-explicit-any': 'off',

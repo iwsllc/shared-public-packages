@@ -18,7 +18,7 @@ describe('Index', () => {
 				expect(result).toEqual({ something: 'anything' })
 			})
 			it('getOne with general exception', async () => {
-				const spy = vi.spyOn(global, 'fetch').mockRejectedValueOnce(new Error('Failed to fetch'))
+				vi.spyOn(global, 'fetch').mockRejectedValueOnce(new Error('Failed to fetch'))
 				const { getOne } = setupFetch('http://localhost:3000')
 				try {
 					await getOne('/api/v1/users', '5')
@@ -27,7 +27,7 @@ describe('Index', () => {
 				}
 			})
 			it('getOne with http non-success', async () => {
-				const spy = vi.spyOn(global, 'fetch').mockResolvedValueOnce({ ok: false, status: 404, text: () => Promise.resolve(JSON.stringify({ error: 'not found', stack: 'stack' })) } as any)
+				vi.spyOn(global, 'fetch').mockResolvedValueOnce({ ok: false, status: 404, text: () => Promise.resolve(JSON.stringify({ error: 'not found', stack: 'stack' })) } as any)
 				const { getOne } = setupFetch('http://localhost:3000')
 				try {
 					await getOne('/api/v1/users', '5')
@@ -40,7 +40,7 @@ describe('Index', () => {
 				}
 			})
 			it('getOne with http non-success, text body', async () => {
-				const spy = vi.spyOn(global, 'fetch').mockResolvedValueOnce({ ok: false, status: 404, text: () => Promise.resolve('Not found') } as any)
+				vi.spyOn(global, 'fetch').mockResolvedValueOnce({ ok: false, status: 404, text: () => Promise.resolve('Not found') } as any)
 				const { getOne } = setupFetch('http://localhost:3000')
 				try {
 					await getOne('/api/v1/users', '5')
