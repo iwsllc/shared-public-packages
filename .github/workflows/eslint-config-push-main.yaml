@@ -9,7 +9,10 @@ on:
 jobs:
   version:
     if: ${{ !contains(github.event.head_commit.message, '#skip') }}
-    uses: iwsllc/workflows/.github/workflows/version.yaml@v2
+    concurrency:
+      group: 'versioning-automation'
+      cancel-in-progress: false
+    uses: iwsllc/workflows/.github/workflows/version-as-app.yaml@main
     with:
       ref: main
       cache: npm
@@ -18,6 +21,9 @@ jobs:
       version-command: npm version patch -w packages/eslint-config
       version-workspace: packages/eslint-config
       tag-includes-name: true
+    secrets:
+      IWS_VERSION_BOT_PK: ${{ secrets.IWS_VERSION_BOT_PK}}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   publish:
     needs: version
     if: ${{ !contains(github.event.head_commit.message, '#skip') }}
