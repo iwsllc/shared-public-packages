@@ -111,8 +111,6 @@ export const configure = (
 		(monoRepoNodeProjects.length > 0 && ({
 			// node rules
 			files: monoRepoNodeProjects.map(path => `${path}/**/*`),
-			// files: [],
-			test: 'test',
 
 			plugins: {
 				n: nodePlugin
