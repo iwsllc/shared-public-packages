@@ -24,8 +24,6 @@ export interface IdBody { id: string }
 
 export type WithId<T> = Omit<T, 'id'> & IdBody
 
-export interface ErrorBody { error: string, stack?: string }
-
 export interface AffectedBody { count: number }
 
 export type DataBody<T> = Omit<Partial<T>, 'id'>
