@@ -1,21 +1,31 @@
-import { ErrorBody } from './types.js'
-
-export class FetchError<T extends Partial<ErrorBody>> extends Error {
-	body: string | T | undefined
+export class FetchError<T = unknown> extends Error {
+	body: T | string | undefined
 	isJson: boolean
 	status: number | undefined
 
-	constructor(message: string, status: number | undefined, body: T | string | undefined) {
+	constructor(message: string, status: number | undefined, body?: T | string | undefined) {
 		super(message)
 		this.status = status
 		this.body = body
 		this.isJson = typeof body !== 'string'
 	}
 
-	toString() {
+	resolveMessage() {
 		let message
-		if (!this.isJson) message = this.body
-		else message = (this.body as T).error ?? 'No server response.'
-		return `Request failed.\nStatus: ${this.status}\nResponse from server:\n${message}`
+		if (this.body == null) message = this.message
+		else {
+			// try to extract a message from the body
+			if (typeof this.body === 'string') message = this.body as string
+			else if (typeof this.body === 'object') {
+				// a couple guesses
+				if ('message' in this.body && typeof this.body.message === 'string') message = this.body.message
+				if ('error' in this.body && typeof this.body.error === 'string') message = this.body.error
+			}
+		}
+		return message
+	}
+
+	toString() {
+		return `${this.message} - Status: ${this.status} - ${this.resolveMessage()}`
 	}
 }

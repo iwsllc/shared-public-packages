@@ -1,9 +1,8 @@
 import { fetchTyped } from './fetchTyped.js'
 import { resolveResponse } from './resolveResponse.js'
-import { ErrorBody, FetchArgs } from './types.js'
+import { FetchArgs } from './types.js'
 
 export * from './FetchError.js'
-export * from './isErrorBody.js'
 export * from './isFetchError.js'
 export * from './types.js'
 
@@ -25,7 +24,7 @@ export { fetchTyped, resolveResponse }
  * @param defaultOptions Default request options. See MDN RequestInit/fetch
  * @returns
  */
-export function setupFetch<E extends ErrorBody>(baseUrl: string = '', defaultOptions: Partial<RequestInit> = {}) {
+export function setupFetch<E = unknown>(baseUrl: string = '', defaultOptions: Partial<RequestInit> = {}) {
 	async function fetchWithDefaultOptions<T, E>(endpoint: string, options: FetchArgs = {}) {
 		return await fetchTyped<T, E>(`${baseUrl}${endpoint}`, options, defaultOptions)
 	}

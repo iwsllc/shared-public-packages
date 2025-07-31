@@ -1,5 +1,4 @@
 import { FetchError } from './FetchError.js'
-import { isErrorBody } from './isErrorBody.js'
 import { isFetchError } from './isFetchError.js'
 import { resolveResponse } from './resolveResponse.js'
 
@@ -23,15 +22,14 @@ describe('resolveResponse', () => {
 	})
 
 	it('should reject response', async () => {
-		const res = new Response('{"error": "error"}', { status: 400 })
+		const res = new Response('{"message": "error"}', { status: 400 })
 		try {
 			await resolveResponse(res)
 		} catch (err) {
 			expect(err).toBeInstanceOf(FetchError)
 			if (!isFetchError(err)) throw new Error('Invalid error')
-			expect(err.body).toEqual({ error: 'error' })
-			if (!isErrorBody(err.body)) throw new Error('Invalid error body')
-			expect(err.message).to.eql(err.body.error)
+			expect(err.body).toEqual({ message: 'error' })
+			expect(err.message).to.eql('Request failed')
 		}
 	})
 	it('should reject text response', async () => {
@@ -42,7 +40,7 @@ describe('resolveResponse', () => {
 			expect(err).toBeInstanceOf(FetchError)
 			if (!isFetchError(err)) return
 			expect(err.body).toEqual('Not found')
-			expect(err.message).to.eql('Request failed - Not found')
+			expect(err.message).to.eql('Request failed')
 		}
 	})
 })

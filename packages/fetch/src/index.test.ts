@@ -34,7 +34,7 @@ describe('Index', () => {
 				} catch (err) {
 					expect(err).toBeInstanceOf(FetchError)
 					expect(err.isJson).toEqual(true)
-					expect(err.message).toEqual('not found')
+					expect(err.message).toEqual('Request failed')
 					expect(err.body.error).toEqual('not found')
 					expect(err.body.stack).toEqual('stack')
 				}
@@ -47,7 +47,7 @@ describe('Index', () => {
 				} catch (err) {
 					expect(err).toBeInstanceOf(FetchError)
 					expect(err.isJson).toEqual(false)
-					expect(err.message).toEqual('Request failed - Not found')
+					expect(err.message).toEqual('Request failed')
 					expect(err.body).toEqual('Not found')
 				}
 			})
