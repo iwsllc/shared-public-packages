@@ -1,6 +1,6 @@
 import { fetchTyped } from './fetchTyped.js'
 
-// const host = 'http://localhost:3001'
+const host = 'http://localhost:3000'
 
 interface Thing { data: string }
 interface ErrorBody { message: string, stack?: string }
@@ -91,7 +91,7 @@ describe('fetchTyped', () => {
 		})
 
 		it('should fetch with typed response on success', async () => {
-			const response = await fetchTyped<Movies, ErrorBody>(`${host}/movies.json`)
+			const response = await fetchTyped<Movies, ErrorBody>(`${host}/test-json`)
 			expect(response.ok).to.be.true
 			expect(response.status).to.eq(200)
 
@@ -108,23 +108,19 @@ describe('fetchTyped', () => {
 		})
 
 		it('should fetch with failed text response on non-http success', async () => {
-			try {
-				const response = await fetchTyped(`${host}/api/fake-500`)
-				expect(response.ok).to.be.false
-				expect(response.status).to.eq(500)
+			const response = await fetchTyped(`${host}/test-500-json`)
+			expect(response.ok).to.be.false
+			expect(response.status).to.eq(500)
 
-				const result = await response.json()
+			const result = await response.json()
 
-				expect(result).to.be.ok
-				if (result == null) return
+			expect(result).to.be.ok
+			if (result == null) return
 
-				// data assertion
-				expect(result).to.deep.eq({ message: 'Fake error', stack: 'fake stack' })
+			// data assertion
+			expect(result).to.deep.eq({ message: 'Fake error', stack: 'Fake stack trace' })
 
-				expect(isError(result)).to.be.true
-			} catch (err) {
-				expect(err).not.to.be.ok // NOTE; 500 doesn't throw
-			}
+			expect(isError(result)).to.be.true
 		})
 	})
 })
