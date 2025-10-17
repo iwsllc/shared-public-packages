@@ -1,13 +1,15 @@
 import eslint from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
+import { defineConfig } from 'eslint/config'
+import tailwind from 'eslint-plugin-better-tailwindcss'
 import nodePlugin from 'eslint-plugin-n'
 import promisePlugin from 'eslint-plugin-promise'
 import reactPlugin from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
-import { config, configs } from 'typescript-eslint'
+import tseslint from 'typescript-eslint'
 
 import jsxA11y from './eslint-plugin-jsx-a11y.mjs'
-import eslintPluginReactHooks from './eslint-plugin-react-hooks.mjs'
 import reactRefreshConfig from './eslint-plugin-react-refresh.mjs'
 import sort from './eslint-plugin-simple-import-sort.mjs'
 
@@ -42,13 +44,14 @@ export const configure = (
 		},
 		// all projects:
 		eslint.configs.recommended,
-		...configs.recommended,
+		tseslint.configs.recommended,
 
 		// JSX specific rules
 		...(includeReact
 			? [...jsxA11y,
-					eslintPluginReactHooks,
-					reactRefreshConfig
+					reactHooks.configs.flat.recommended,
+					reactRefreshConfig,
+					tailwind.config
 				]
 			: []),
 
@@ -149,6 +152,6 @@ export const configure = (
 		console.dir(lintConfigs.filter(c => !!c), { depth: 2, colors: true })
 	}
 	return [
-		...config(lintConfigs.filter(c => !!c))
+		...defineConfig(lintConfigs.filter(c => !!c))
 	]
 }
