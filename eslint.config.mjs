@@ -1,8 +1,9 @@
+import { fileURLToPath } from 'node:url'
+
 import { configure } from '@iwsio/eslint-config'
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
-const monoRepoPackages = [
-]
+const excludeWorkspacesFromNodeRules = ['packages/fetch', 'packages/tsconfig'] // meant for browser only or not Node related.
 
-const monoRepoNodeProjects = []
-
-export default configure({ monoRepoPackages, monoRepoNodeProjects })
+const configs = await configure({ autoFindMonorepoPackages: true, rootDir: __dirname, excludeWorkspacesFromNodeRules })
+export default configs

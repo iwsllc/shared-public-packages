@@ -11,11 +11,11 @@
   "files": [
     "*.json"
   ],
-  "repository": "github:iwsllc/shared-public-packages",
+  "repository": "github:iwsllc/iwsio-packages",
   "author": "Nathan Bridgewater <info@iws.io>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iwsllc/shared-public-packages/issues"
+    "url": "https://github.com/iwsllc/iwsio-packages/issues"
   },
-  "homepage": "https://github.com/iwsllc/shared-public-packages/packages/tsconfig/readme"
+  "homepage": "https://github.com/iwsllc/iwsio-packages/packages/tsconfig/readme"
 }
