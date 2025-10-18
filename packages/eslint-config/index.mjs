@@ -12,14 +12,41 @@ import tseslint from 'typescript-eslint'
 import jsxA11y from './eslint-plugin-jsx-a11y.mjs'
 import reactRefreshConfig from './eslint-plugin-react-refresh.mjs'
 import sort from './eslint-plugin-simple-import-sort.mjs'
+import { findAndDetermineWorkspacePackages } from './findAndDetermineWorkspacePackages.mjs'
+
+export * from './findAndDetermineWorkspacePackages.mjs'
 
 /**
  * Generate ESLint configuration for a project. This is an opinionated Typescript & stylistic configuration.
- * @type {import('./index').CustomizeFn}
+ * @param {import('./index').CustomizeOptions} options Configuration options
+ * @returns {Promise<import('eslint').FlatConfig[]>} ESLint Flat Config array
+ *
+ * @example
+ * ```js
+ * import { configure } from '@iwsio/eslint-config'
+ * import { fileURLToPath } from 'node:url'
+ *
+ * // determine full root path of your monorepo
+ * const rootDir = fileURLToPath(new URL('.', import.meta.url))
+ *
+ * // meant for browser only projects
+ * const excludeWorkspacesFromNodeRules = ['apps/main', 'packages/ui-proj']
+ *
+ * const configs = await configure({
+ *   autoFindMonorepoPackages: true,
+ *   rootDir,
+ *   excludeWorkspacesFromNodeRules
+ * })
+ *
+ * export default configs
+ * ```
  */
-export const configure = (
+export const configure = async (
 	{
 		includeReact = true,
+		autoFindMonorepoPackages = false,
+		excludeWorkspacesFromNodeRules = [],
+		rootDir,
 		monoRepoPackages = [],
 		monoRepoNodeProjects = [],
 		stylisticInit = {
@@ -31,13 +58,26 @@ export const configure = (
 			semi: false
 		},
 		ignores = [],
-		/**
-		 * Additional configs to append to the end of the configuration.
-		 * @type {import('eslint').Linter.Config[]}
-		 */
 		appendConfigs = [],
 		debug = false
 	}) => {
+	let finalMonoRepoPackages = monoRepoPackages
+	let finalNodeProjects = monoRepoNodeProjects
+	if (autoFindMonorepoPackages) {
+		if (rootDir == null) throw new Error('rootDir must be provided when autoFindMonorepoPackages is true')
+		// dynamically find monorepo packages
+		const workspacePackages = await findAndDetermineWorkspacePackages(rootDir, { debug })
+		finalMonoRepoPackages = workspacePackages.map(p => p.name)
+		finalNodeProjects = workspacePackages.map(p => p.dir.replace(rootDir, '')).filter(p => !excludeWorkspacesFromNodeRules.includes(p)) // relative paths
+
+		if (debug) {
+			console.log('Auto-detected monorepo packages for ESLint config:')
+			console.dir(finalMonoRepoPackages, { depth: 3, colors: true })
+			console.log('Auto-detected node projects for ESLint config:')
+			console.dir(finalNodeProjects, { depth: 3, colors: true })
+		}
+	}
+
 	const lintConfigs = [
 		{
 			ignores: ['**/node_modules/*', '**/dist/', '**/precompiled/*', '**/*.json', ...ignores] // global ignore with single ignore key
@@ -111,9 +151,9 @@ export const configure = (
 					: {})
 			}
 		},
-		(monoRepoNodeProjects.length > 0 && ({
+		(finalNodeProjects.length > 0 && ({
 			// node rules
-			files: monoRepoNodeProjects.map(path => `${path}/**/*`),
+			files: finalNodeProjects.map(path => `${path}/**/*`),
 
 			plugins: {
 				n: nodePlugin
@@ -125,7 +165,7 @@ export const configure = (
 				// custom
 
 				'n/no-extraneous-import': ['error', {
-					allowModules: [...monoRepoPackages]
+					allowModules: [...finalMonoRepoPackages]
 				}]
 			}
 		})),
@@ -149,7 +189,7 @@ export const configure = (
 		...appendConfigs
 	]
 	if (debug) {
-		console.dir(lintConfigs.filter(c => !!c), { depth: 2, colors: true })
+		console.dir(lintConfigs.filter(c => !!c), { depth: 3, colors: true })
 	}
 	return [
 		...defineConfig(lintConfigs.filter(c => !!c))

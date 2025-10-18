@@ -14,7 +14,7 @@ export interface CustomizeOptions {
 	 */
 	includeTailwind?: boolean
 	/**
-	 * List of package names that can be imported among workspaces in the monorepo.
+	 * Manually specify the list of package names that can be imported among workspaces in the monorepo.
 	 */
 	monoRepoPackages?: string[]
 	/**
@@ -42,6 +42,33 @@ export interface CustomizeOptions {
 	 * This uses `console.dir` (may be hidden from console output)
 	 */
 	debug?: boolean
+
+	/**
+	 * If true, automatically determines package names AND node project workspace paths in the monorepo via pnpm-workspace.yaml or package.json workspaces field.
+	 *
+	 * Requires `rootDir` property to be set.
+	 *
+	 * Overrides `monoRepoPackages` and `monoRepoNodeProjects`
+	 *
+	 * Use `excludeWorkspacesFromNodeRules` to exclude specific workspaces from being considered Node projects.
+	 *
+	 * Default is false.
+	 */
+	autoFindMonorepoPackages?: boolean
+
+	/**
+	 * When `autoFindMonorepoPackages` is true, this array of workspace names will be ignored form Node.JS specific rules.
+	 *
+	 * These should be relative paths from the root of the monorepo. (npm workspace style)
+	 *
+	 * Example: ['packages/app-ui', 'apps/client'] // projects that should not have Node.JS rules applied
+	 */
+	excludeWorkspacesFromNodeRules?: string[]
+
+	/**
+	 * Root directory of the monorepo. Required if `autoFindMonorepoPackages` is true.
+	 */
+	rootDir?: string
 }
 
 export type CustomizeFn = (options?: CustomizeOptions) => ConfigArray
